@@ -9,12 +9,12 @@ kernelDir1="/home/zaichron-lin/AndroidDev/htc_m8_kernel_sense_5.0.1" #( Example 
 kernelDir2="/home/zaichron-lin/AndroidDev/htc_m8_kernel_sense_5.0.1" #( Example /home/user/path )
 kernelDir3="Path to kernel 3" #( Example /home/user/path )
 #Toolchain path
-toolchainDir="/home/zaichron-lin/AndroidDev/AAtoolchains/linaro_toolchains_2014/arm-cortex_a15-linux-gnueabihf-linaro_4.9.3-2014.12" #( Example /home/user/path )
+toolchainDir="/home/zaichron-lin/AndroidDev/AAtoolchains/linaro_toolchains/Christopher83_arm-cortex_a15-linux-gnueabihf-linaro_4.9" #( Example /home/user/path )
 #Path where you would like the kernel to be outputed
 exportDir="/home/zaichron-lin/Desktop/Copy/AndroidDev/Kernz/m8/out" #( Example /home/user/Desktop )
 #Change default to what ever you like
-kernel1name="FlarPort-m8-4.00.1-Sense"
-kernel2name="FlarPort-m8-4.xx.x-Sense"
+kernel1name="FlarPort-m8-4.04-Sense"
+kernel2name="FlarPort-m8-4.xx-Sense"
 kernel3name="Default-3"
 #Do not edit
 now=$(date +"%m-%d-%Y-%H-%M")
@@ -90,7 +90,7 @@ echo
 echo " Moving modules "
 find -iname *.ko | xargs cp -t /home/zaichron-lin/Desktop/Copy/AndroidDev/Kernz/m8/ElementalX-Sense-5.0.1/system/lib/modules
 
-cd /home/zaichron-lin/Desktop/Copy/AndroidDev/Kernz/m8/ElementalX-Sense-4.4.4
+cd /home/zaichron-lin/Desktop/Copy/AndroidDev/Kernz/m8/ElementalX-Sense-5.0.1
 
 echo
 echo
@@ -98,7 +98,7 @@ echo " I a make a da zip now, then move that ish to copy out dir "
 zip -r $kernelName-$now.zip * -x **~*
 mv $kernelName-$now.zip $exportDir
 #cd ..
-cd ~/AndroidDev/htc_m8whl_kernel_sense_5.0.1
+cd ~/AndroidDev/htc_m8_kernel_sense_5.0.1
 #rm -r zip2
 cd $DIR
 echo
