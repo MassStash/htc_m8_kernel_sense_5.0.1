@@ -40,8 +40,6 @@ const char *const pm_states[PM_SUSPEND_MAX] = {
 
 static const struct platform_suspend_ops *suspend_ops;
 
-<<<<<<< HEAD
-=======
 static bool need_suspend_ops(suspend_state_t state)
 {
 	return !!(state > PM_SUSPEND_FREEZE);
@@ -71,7 +69,6 @@ EXPORT_SYMBOL_GPL(freeze_wake);
  * suspend_set_ops - Set the global suspend method table.
  * @ops: Suspend operations to use.
  */
->>>>>>> c03af6e... PM: Introduce suspend state PM_SUSPEND_FREEZE
 void suspend_set_ops(const struct platform_suspend_ops *ops)
 {
 	lock_system_sleep();
@@ -82,8 +79,6 @@ EXPORT_SYMBOL_GPL(suspend_set_ops);
 
 bool valid_state(suspend_state_t state)
 {
-<<<<<<< HEAD
-=======
 	if (state == PM_SUSPEND_FREEZE)
 		return true;
 	/*
@@ -91,7 +86,6 @@ bool valid_state(suspend_state_t state)
 	 * support and need to be valid to the lowlevel
 	 * implementation, no valid callback implies that none are valid.
 	 */
->>>>>>> c03af6e... PM: Introduce suspend state PM_SUSPEND_FREEZE
 	return suspend_ops && suspend_ops->valid && suspend_ops->valid(state);
 }
 
@@ -135,9 +129,6 @@ static int suspend_test(int level)
 	return 0;
 }
 
-<<<<<<< HEAD
-static int suspend_prepare(void)
-=======
 /**
  * suspend_prepare - Prepare for entering system sleep state.
  *
@@ -146,7 +137,6 @@ static int suspend_prepare(void)
  * freeze processes.
  */
 static int suspend_prepare(suspend_state_t state)
->>>>>>> c03af6e... PM: Introduce suspend state PM_SUSPEND_FREEZE
 {
 	int error;
 
@@ -265,7 +255,6 @@ int suspend_devices_and_enter(suspend_state_t state)
 		return -ENOSYS;
 
 	trace_machine_suspend(state);
-<<<<<<< HEAD
 
 #ifdef CONFIG_SUSPEND_ONLY_ALLOW_WFI
 	printk("PM: only allow wfi\n");
@@ -273,10 +262,7 @@ int suspend_devices_and_enter(suspend_state_t state)
 	pm_qos_update_request(&pm_qos_req_dma, 2);
 #endif
 
-	if (suspend_ops->begin) {
-=======
 	if (need_suspend_ops(state) && suspend_ops->begin) {
->>>>>>> c03af6e... PM: Introduce suspend state PM_SUSPEND_FREEZE
 		error = suspend_ops->begin(state);
 		if (error)
 			goto Close;
@@ -295,13 +281,8 @@ int suspend_devices_and_enter(suspend_state_t state)
 
 	do {
 		error = suspend_enter(state, &wakeup);
-<<<<<<< HEAD
-	} while (!error && !wakeup
-		&& platform_suspend_again());
-=======
 	} while (!error && !wakeup && need_suspend_ops(state)
-		&& suspend_ops->suspend_again && suspend_ops->suspend_again());
->>>>>>> c03af6e... PM: Introduce suspend state PM_SUSPEND_FREEZE
+		&& platform_suspend_again());
 
  Resume_devices:
 	suspend_test_start();
@@ -344,18 +325,12 @@ static int enter_state(suspend_state_t state)
 	if (!mutex_trylock(&pm_mutex))
 		return -EBUSY;
 
-<<<<<<< HEAD
 	suspend_sys_sync_queue();
 
 	if (state == PM_SUSPEND_FREEZE)
 		freeze_begin();
 
 #ifdef CONFIG_PM_SYNC_BEFORE_SUSPEND
-=======
-	if (state == PM_SUSPEND_FREEZE)
-		freeze_begin();
-
->>>>>>> c03af6e... PM: Introduce suspend state PM_SUSPEND_FREEZE
 	printk(KERN_INFO "PM: Syncing filesystems ... ");
 	sys_sync();
 	printk("done.\n");
